@@ -1,40 +1,42 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+from data import Url
+from locators import locator_constructor_title_sousy, locator_constructor_title_bulki, \
+    locator_constructor_current_div_bulki, locator_constructor_current_div_sousy, locator_constructor_title_nachinki, \
+    locator_constructor_current_div_nachinki
 
 
-def test_constructor_bulki():
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    driver.get("https://stellarburgers.nomoreparties.site/")
-    driver.find_element(By.XPATH, ".//span[text()='Соусы']").click()
-    WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, ".//h2[text()='Булки']")))
-    driver.find_element(By.XPATH, ".//span[text()='Булки']").click()
-    WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//h2[text()='Булки']")))
+class TestConstructor:
 
-    assert driver.find_element(By.XPATH, ".//span[text()='Булки']").text == 'Булки'
+    def test_constructor_bulki(self, driver):
+        driver.get(Url.url_main_page)
+        WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_constructor_title_sousy)))
+        driver.find_element(By.XPATH, locator_constructor_title_sousy).click()
+        WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, locator_constructor_title_bulki)))
+        driver.find_element(By.XPATH, locator_constructor_title_bulki).click()
 
-    driver.quit()
+        element = driver.find_element(By.XPATH, locator_constructor_current_div_bulki)
+        assert 'type_current' in element.get_attribute("class")
 
-def test_constructor_sousy():
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    driver.get("https://stellarburgers.nomoreparties.site/")
-    driver.find_element(By.XPATH, ".//span[text()='Соусы']").click()
-    WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//h2[text()='Соусы']")))
+        driver.quit()
 
-    assert driver.find_element(By.XPATH, ".//span[text()='Соусы']").text == 'Соусы'
+    def test_constructor_sousy(self, driver):
+        driver.get(Url.url_main_page)
+        WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_constructor_title_sousy)))
+        driver.find_element(By.XPATH, locator_constructor_title_sousy).click()
 
-    driver.quit()
+        element = driver.find_element(By.XPATH, locator_constructor_current_div_sousy)
+        assert 'type_current' in element.get_attribute("class")
 
-def test_constructor_nachinki():
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    driver.get("https://stellarburgers.nomoreparties.site/")
-    driver.find_element(By.XPATH, ".//span[text()='Начинки']").click()
-    WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//h2[text()='Начинки']")))
+        driver.quit()
 
-    assert driver.find_element(By.XPATH, ".//span[text()='Начинки']").text == 'Начинки'
+    def test_constructor_nachinki(self, driver):
+        driver.get(Url.url_main_page)
+        WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_constructor_title_nachinki)))
+        driver.find_element(By.XPATH, locator_constructor_title_nachinki).click()
 
-    driver.quit()
+        element = driver.find_element(By.XPATH, locator_constructor_current_div_nachinki)
+        assert 'type_current' in element.get_attribute("class")
+
+        driver.quit()

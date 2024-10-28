@@ -4,14 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-
-
-class User:
-
-    def __init__(self, name, email, password):
-        self.name = name
-        self.email = email
-        self.password = password
+from data import User, Url
+from locators import locator_register_button, locator_login_account_button, locator_login_button, locator_order_button
 
 
 @pytest.fixture
@@ -32,26 +26,31 @@ def driver(user):
 
     return driver
 
+    driver.quit()
+
 @pytest.fixture
 def registration(user, driver):
-    driver.get("https://stellarburgers.nomoreparties.site/register")
-    driver.find_element(By.XPATH, ".//fieldset[1]/div/div/input").send_keys(user.name)
-    driver.find_element(By.XPATH, ".//fieldset[2]/div/div/input").send_keys(user.email)
-    driver.find_element(By.XPATH, ".//fieldset[3]/div/div/input").send_keys(user.password)
-    driver.find_element(By.XPATH, ".//button[text()='Зарегистрироваться']").click()
-    WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, ".//button[text()='Войти']")))
+    driver.get(Url.url_register_page)
+    WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, locator_register_button)))
 
-    return registration
+    elements = driver.find_elements(By.TAG_NAME, "input")
+    elements[0].send_keys(user.name)
+    elements[1].send_keys(user.email)
+    elements[2].send_keys(user.password)
+    driver.find_element(By.XPATH, locator_register_button).click()
+    WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, locator_login_button)))
 
 @pytest.fixture
 def login(user, driver, registration):
-    driver.get("https://stellarburgers.nomoreparties.site/")
-    driver.find_element(By.XPATH, ".//button[text()='Войти в аккаунт']").click()
-    WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, ".//button[text()='Войти']")))
+    driver.get(Url.url_main_page)
+    WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, locator_login_account_button)))
+    driver.find_element(By.XPATH, locator_login_account_button).click()
+    WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, locator_login_button)))
 
-    driver.find_element(By.XPATH, ".//fieldset[1]/div/div/input").send_keys(user.email)
-    driver.find_element(By.XPATH, ".//fieldset[2]/div/div/input").send_keys(user.password)
-    driver.find_element(By.XPATH, ".//button[text()='Войти']").click()
-    WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//button[text()='Оформить заказ']")))
+    elements = driver.find_elements(By.TAG_NAME, "input")
+    elements[0].send_keys(user.email)
+    elements[1].send_keys(user.password)
+    driver.find_element(By.XPATH, locator_login_button).click()
+    WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_order_button)))
 
     return login
