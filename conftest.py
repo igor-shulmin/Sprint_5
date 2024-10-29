@@ -52,5 +52,3 @@ def login(user, driver, registration):
     elements[1].send_keys(user.password)
     driver.find_element(By.XPATH, locator_login_button).click()
     WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_order_button)))
-
-    return login
