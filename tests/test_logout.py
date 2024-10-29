@@ -15,5 +15,3 @@ class TestLogout:
         WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, locator_login_button)))
 
         assert driver.current_url == Url.url_login_page
-
-        driver.quit()

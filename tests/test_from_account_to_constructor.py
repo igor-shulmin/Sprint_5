@@ -16,8 +16,6 @@ class TestFromAccountToConstructor:
 
         assert driver.current_url == Url.url_main_page
 
-        driver.quit()
-
     def test_from_account_to_constructor_by_logo(self, user, driver, login):
         driver.get(Url.url_main_page)
         driver.find_element(By.XPATH, locator_account_button).click()
@@ -26,5 +24,3 @@ class TestFromAccountToConstructor:
         WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_constructor_text)))
 
         assert driver.current_url == Url.url_main_page
-
-        driver.quit()

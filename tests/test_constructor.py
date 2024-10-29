@@ -19,8 +19,6 @@ class TestConstructor:
         element = driver.find_element(By.XPATH, locator_constructor_current_div_bulki)
         assert 'type_current' in element.get_attribute("class")
 
-        driver.quit()
-
     def test_constructor_sousy(self, driver):
         driver.get(Url.url_main_page)
         WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_constructor_title_sousy)))
@@ -29,8 +27,6 @@ class TestConstructor:
         element = driver.find_element(By.XPATH, locator_constructor_current_div_sousy)
         assert 'type_current' in element.get_attribute("class")
 
-        driver.quit()
-
     def test_constructor_nachinki(self, driver):
         driver.get(Url.url_main_page)
         WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_constructor_title_nachinki)))
@@ -38,5 +34,3 @@ class TestConstructor:
 
         element = driver.find_element(By.XPATH, locator_constructor_current_div_nachinki)
         assert 'type_current' in element.get_attribute("class")
-
-        driver.quit()

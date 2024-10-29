@@ -19,8 +19,6 @@ class TestRegistration:
 
         assert driver.current_url == Url.url_login_page
 
-        driver.quit()
-
     def test_registration_password_error(self, user, driver):
         driver.get(Url.url_register_page)
 
@@ -32,5 +30,3 @@ class TestRegistration:
         WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_register_text_uncorrect_password)))
 
         assert driver.find_element(By.XPATH, locator_register_text_uncorrect_password).text == 'Некорректный пароль'
-
-        driver.quit()

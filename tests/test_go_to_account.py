@@ -13,5 +13,3 @@ class TestGoToAccount:
         WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable((By.XPATH, locator_profile_link)))
 
         assert driver.current_url == Url.url_profile_page
-
-        driver.quit()

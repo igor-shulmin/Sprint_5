@@ -21,8 +21,6 @@ class TestLogin:
 
         assert driver.find_element(By.XPATH,locator_order_button).text == 'Оформить заказ'
 
-        driver.quit()
-
     def test_login_from_main_by_account(self, user, driver, registration):
         driver.get(Url.url_main_page)
         driver.find_element(By.XPATH, locator_account_button).click()
@@ -35,8 +33,6 @@ class TestLogin:
         WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_order_button)))
 
         assert driver.find_element(By.XPATH, locator_order_button).text == 'Оформить заказ'
-
-        driver.quit()
 
     def test_login_from_registration(self, user, driver, registration):
         driver.get(Url.url_register_page)
@@ -51,8 +47,6 @@ class TestLogin:
 
         assert driver.find_element(By.XPATH, locator_order_button).text == 'Оформить заказ'
 
-        driver.quit()
-
     def test_login_from_forgot_password(self, user, driver, registration):
         driver.get(Url.url_forgot_password_page)
         driver.find_element(By.XPATH, locator_login_from_register_and_forgot_button).click()
@@ -65,5 +59,3 @@ class TestLogin:
         WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, locator_order_button)))
 
         assert driver.find_element(By.XPATH, locator_order_button).text == 'Оформить заказ'
-
-        driver.quit()
